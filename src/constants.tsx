@@ -1,5 +1,5 @@
 
-import { NavItem } from './types';
+import { NavItem } from './types/types';
 
 export const NAVIGATION_ITEMS: NavItem[] = [
   {

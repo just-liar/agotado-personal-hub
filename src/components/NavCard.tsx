@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { NavItem } from '../types';
+import { NavItem } from '../types/types';
 
 interface NavCardProps {
   item: NavItem;

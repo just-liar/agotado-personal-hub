@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react';
 import BackgroundAnimation from './components/BackgroundAnimation';
 import NavCard from './components/NavCard';
 import StudyPlan from './components/StudyPlan';
+import StudyProgress from './components/StudyProgress';
+import DailyQuiz from './components/DailyQuiz';
 import CountdownQuote from './components/CountdownQuote';
 import { NAVIGATION_ITEMS } from './constants';
 
@@ -66,11 +68,10 @@ const App: React.FC = () => {
           <CountdownQuote />
         </div>
 
-        {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-40">
-          {NAVIGATION_ITEMS.map((item) => (
-            <NavCard key={item.id} item={item} />
-          ))}
+        {/* Study Dashboard Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-40 min-h-[500px]">
+          <StudyProgress />
+          <DailyQuiz />
         </div>
 
         <StudyPlan />

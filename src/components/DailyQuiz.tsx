@@ -96,6 +96,36 @@ const DailyQuiz: React.FC = () => {
     setUserAnswers(newAnswers);
   };
 
+  const [syncStatus, setSyncStatus] = useState<Record<number, 'idle' | 'syncing' | 'success' | 'error'>>({});
+
+  const handleSyncMistake = async (idx: number, question: QuizQuestion) => {
+    setSyncStatus(prev => ({ ...prev, [idx]: 'syncing' }));
+    
+    try {
+      const response = await fetch('/api/sync-mistake', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          subject: topic || "综合", // Fallback if topic is empty
+          question: question.question,
+          answer: question.options[question.correctIndex],
+          analysis: question.explanation
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Sync failed');
+      }
+
+      setSyncStatus(prev => ({ ...prev, [idx]: 'success' }));
+    } catch (error) {
+      console.error('Failed to sync mistake:', error);
+      setSyncStatus(prev => ({ ...prev, [idx]: 'error' }));
+    }
+  };
+
   const submitQuiz = () => {
     let calculatedScore = 0;
     questions.forEach((q, idx) => {
@@ -113,6 +143,7 @@ const DailyQuiz: React.FC = () => {
     setQuestions([]);
     setUserAnswers([]);
     setScore(0);
+    setSyncStatus({});
   };
 
   return (
@@ -237,6 +268,37 @@ const DailyQuiz: React.FC = () => {
                         <span className="font-semibold text-indigo-600 block mb-1">解析：</span>
                         {q.explanation}
                     </div>
+                    
+                    {!isCorrect && (
+                      <button
+                        onClick={() => handleSyncMistake(idx, q)}
+                        disabled={syncStatus[idx] === 'syncing' || syncStatus[idx] === 'success'}
+                        className={`mt-2 px-3 py-1.5 rounded-lg text-xs font-medium transition-all flex items-center gap-1.5 ${
+                          syncStatus[idx] === 'success' 
+                            ? 'bg-green-100 text-green-700 cursor-default'
+                            : syncStatus[idx] === 'error'
+                              ? 'bg-red-100 text-red-700 hover:bg-red-200'
+                              : 'bg-indigo-50 text-indigo-600 hover:bg-indigo-100'
+                        }`}
+                      >
+                        {syncStatus[idx] === 'success' ? (
+                          <>
+                            <i className="fas fa-check"></i>
+                            ✅ 已同步
+                          </>
+                        ) : syncStatus[idx] === 'syncing' ? (
+                          <>
+                            <i className="fas fa-spinner fa-spin"></i>
+                            同步中...
+                          </>
+                        ) : (
+                          <>
+                            <i className="fas fa-edit"></i>
+                            📝 同步至 Notion 错题本
+                          </>
+                        )}
+                      </button>
+                    )}
                   </div>
                 </div>
               );

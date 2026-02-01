@@ -20,6 +20,11 @@ const DailyQuiz: React.FC = () => {
   const generateQuiz = async () => {
     if (!topic.trim()) return;
     
+    if (!SILICONFLOW_API_KEY) {
+      alert('错误：未检测到 API Key。请确保您已在 GitHub Secrets 中配置了 VITE_SILICONFLOW_API_KEY，并重新触发了部署。');
+      return;
+    }
+
     setStatus('loading');
     try {
       // 11408 考研专家 Agent 提示词

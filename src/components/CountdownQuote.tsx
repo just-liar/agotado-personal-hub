@@ -23,21 +23,10 @@ const QUOTES: Quote[] = [
   { content: "星光不问赶路人，时光不负有心人。", source: "Stars don't ask the traveler; time doesn't fail the aspirant." }
 ];
 
-const getNextExamDate = () => {
-  const now = new Date();
-  const currentYear = now.getFullYear();
-  // 考研通常在每年12月的倒数第二个周末，这里暂定为12月26日作为目标
-  let target = new Date(`${currentYear}-12-26T00:00:00`);
-  
-  // 如果当前时间已经过了今年的考研日期，则目标设定为明年
-  if (now.getTime() > target.getTime()) {
-    target = new Date(`${currentYear + 1}-12-26T00:00:00`);
-  }
-  return target.getTime();
-};
+// 设置目标日期为 2026年12月16日 00:00:00
+const TARGET_DATE = new Date('2026-12-16T00:00:00').getTime();
 
 const CountdownQuote: React.FC = () => {
-  const [targetDate, setTargetDate] = useState<number>(getNextExamDate());
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0 });
   const [currentQuote, setCurrentQuote] = useState<Quote>(QUOTES[0]);
   const [isHovered, setIsHovered] = useState(false);
@@ -46,7 +35,7 @@ const CountdownQuote: React.FC = () => {
   useEffect(() => {
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
-      const difference = targetDate - now;
+      const difference = TARGET_DATE - now;
 
       if (difference > 0) {
         return {
@@ -64,7 +53,7 @@ const CountdownQuote: React.FC = () => {
     }, 60000); // 每分钟更新一次即可
 
     return () => clearInterval(timer);
-  }, [targetDate]);
+  }, []);
 
   // 每日激励语初始化
   useEffect(() => {

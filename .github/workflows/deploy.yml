@@ -51,5 +51,12 @@ jobs:
           port: 22
           script: |
             cd /opt/1panel/apps/openresty/openresty/www/sites/agotado.xyz/index
+            
+            # Create/Update .env file with all secrets
+            echo "VITE_SILICONFLOW_API_KEY=${{ secrets.VITE_SILICONFLOW_API_KEY }}" > .env
+            echo "VITE_GEMINI_API_KEY=${{ secrets.VITE_GEMINI_API_KEY }}" >> .env
+            echo "NOTION_KEY=${{ secrets.NOTION_KEY }}" >> .env
+            echo "NOTION_DB_ID=${{ secrets.NOTION_DB_ID }}" >> .env
+            
             npm install --production
             pm2 restart agotado-api || pm2 start server.js --name "agotado-api"

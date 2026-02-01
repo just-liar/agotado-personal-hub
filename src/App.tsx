@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import BackgroundAnimation from './components/BackgroundAnimation';
 import NavCard from './components/NavCard';
+import StudyPlan from './components/StudyPlan';
+import CountdownQuote from './components/CountdownQuote';
 import { NAVIGATION_ITEMS } from './constants';
 
 const App: React.FC = () => {
@@ -60,6 +62,8 @@ const App: React.FC = () => {
               </span>
             </h2>
           </div>
+
+          <CountdownQuote />
         </div>
 
         {/* Bento Grid */}

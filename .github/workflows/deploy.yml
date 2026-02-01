@@ -24,7 +24,11 @@ jobs:
         env:
           VITE_SILICONFLOW_API_KEY: ${{ secrets.VITE_SILICONFLOW_API_KEY }}
           VITE_GEMINI_API_KEY: ${{ secrets.VITE_GEMINI_API_KEY }}
-        run: npm run build
+        run: |
+          npm run build
+          cp server.js dist/
+          cp package.json dist/
+          cp package-lock.json dist/
 
       - name: Deploy to Server via SCP
         uses: appleboy/scp-action@master
@@ -37,3 +41,15 @@ jobs:
           target: "/opt/1panel/apps/openresty/openresty/www/sites/agotado.xyz/index"
           strip_components: 1
           rm: true
+
+      - name: Install Backend Deps & Restart PM2
+        uses: appleboy/ssh-action@master
+        with:
+          host: 104.248.148.247
+          username: root
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            cd /opt/1panel/apps/openresty/openresty/www/sites/agotado.xyz/index
+            npm install --production
+            pm2 restart agotado-api || pm2 start server.js --name "agotado-api"

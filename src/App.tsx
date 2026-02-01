@@ -8,38 +8,12 @@ import CountdownQuote from './components/CountdownQuote';
 import MinimalDock from './components/MinimalDock';
 
 const App: React.FC = () => {
-  const [uptime, setUptime] = useState("0d 0h 0m");
-
-  useEffect(() => {
-    const start = new Date('2024-01-01').getTime();
-    const update = () => {
-      const now = new Date().getTime();
-      const diff = now - start;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      setUptime(`${days}d ${hours}h ${mins}m`);
-    };
-    update();
-    const timer = setInterval(update, 60000);
-    return () => clearInterval(timer);
-  }, []);
-
   return (
     <div className="min-h-screen relative flex flex-col items-center pt-8 pb-24 px-6 sm:px-12 selection:bg-indigo-500/10">
       <BackgroundAnimation />
 
       <nav className="relative z-20 w-full max-w-6xl flex justify-between items-center mb-24 py-8">
         <div className="text-xl font-bold tracking-tighter text-[#1d1d1f] hover:opacity-70 transition-opacity cursor-default">Agotado.</div>
-        <div className="flex items-center gap-6">
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-white/50 border border-black/5 backdrop-blur-md text-[11px] font-bold text-[#1d1d1f] uppercase tracking-wider">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 shadow-[0_0_8px_rgba(129,140,248,0.6)] animate-pulse"></span>
-            System Online
-          </div>
-          <div className="text-[11px] font-bold text-[#86868b] tracking-[0.2em] uppercase opacity-80">
-            Runtime {uptime}
-          </div>
-        </div>
       </nav>
 
       <main className="relative z-10 w-full max-w-5xl">
@@ -85,31 +59,6 @@ const App: React.FC = () => {
               <div className="flex items-center gap-4 opacity-70 hover:opacity-100 transition-opacity">
                  <a href="https://beian.miit.gov.cn/" className="hover:text-indigo-500">蜀ICP备xxxxxxxx号</a>
               </div>
-            </div>
-            
-            {/* Social Links moved here */}
-            <div className="flex items-center gap-10">
-              <a href="https://github.com" target="_blank" className="text-[#1d1d1f]/40 hover:text-indigo-500 transition-all hover:-translate-y-1 text-xl">
-                <i className="fab fa-github"></i>
-              </a>
-              <a href="#" className="text-[#1d1d1f]/40 hover:text-pink-400 transition-all hover:-translate-y-1 text-xl">
-                <i className="fab fa-weixin"></i>
-              </a>
-              <a href="#" className="text-[#1d1d1f]/40 hover:text-sky-400 transition-all hover:-translate-y-1 text-xl">
-                <i className="fas fa-envelope"></i>
-              </a>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-x-10 gap-y-4 opacity-60">
-              <span className="flex items-center gap-2">
-                <i className="fas fa-microchip text-[10px]"></i> 1Panel Stack
-              </span>
-              <span className="flex items-center gap-2">
-                <i className="fas fa-terminal text-[10px]"></i> Ubuntu Node
-              </span>
-              <span className="flex items-center gap-2">
-                <i className="fas fa-shield-halved text-[10px]"></i> SSL Secured
-              </span>
             </div>
           </div>
         </footer>

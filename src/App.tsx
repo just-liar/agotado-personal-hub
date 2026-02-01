@@ -5,6 +5,7 @@ import StudyPlan from './components/StudyPlan';
 import StudyProgress from './components/StudyProgress';
 import DailyQuiz from './components/DailyQuiz';
 import CountdownQuote from './components/CountdownQuote';
+import MinimalDock from './components/MinimalDock';
 
 const App: React.FC = () => {
   const [uptime, setUptime] = useState("0d 0h 0m");
@@ -73,6 +74,8 @@ const App: React.FC = () => {
         </div>
 
         <StudyPlan />
+
+        <MinimalDock />
 
         {/* Footer */}
         <footer className="text-[#86868b] text-[12px] font-medium border-t border-black/5 pt-12 space-y-12">

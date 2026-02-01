@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import BackgroundAnimation from './components/BackgroundAnimation';
 import StudyPlan from './components/StudyPlan';
 import StudyProgress from './components/StudyProgress';
@@ -12,11 +12,7 @@ const App: React.FC = () => {
     <div className="min-h-screen relative flex flex-col items-center pt-8 pb-24 px-6 sm:px-12 selection:bg-indigo-500/10">
       <BackgroundAnimation />
 
-      <nav className="relative z-20 w-full max-w-6xl flex justify-between items-center mb-24 py-8">
-        <div className="text-xl font-bold tracking-tighter text-[#1d1d1f] hover:opacity-70 transition-opacity cursor-default">Agotado.</div>
-      </nav>
-
-      <main className="relative z-10 w-full max-w-5xl">
+      <main className="relative z-10 w-full max-w-5xl mt-24">
         {/* Hero Section */}
         <div className="text-center mb-40">
           <div className="mb-20"> {/* Increased margin from title */}

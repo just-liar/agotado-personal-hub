@@ -73,6 +73,8 @@ const App: React.FC = () => {
           ))}
         </div>
 
+        <StudyPlan />
+
         {/* Footer */}
         <footer className="text-[#86868b] text-[12px] font-medium border-t border-black/5 pt-12 space-y-12">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8">

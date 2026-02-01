@@ -116,12 +116,13 @@ const DailyQuiz: React.FC = () => {
       });
 
       if (!response.ok) {
-        throw new Error('Sync failed');
+        throw new Error(`Sync failed: ${response.status} ${response.statusText}`);
       }
 
       setSyncStatus(prev => ({ ...prev, [idx]: 'success' }));
-    } catch (error) {
+    } catch (error: any) {
       console.error('Failed to sync mistake:', error);
+      alert(`同步失败: ${error.message}`);
       setSyncStatus(prev => ({ ...prev, [idx]: 'error' }));
     }
   };

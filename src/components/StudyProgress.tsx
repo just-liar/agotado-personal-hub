@@ -16,7 +16,7 @@ const StudyProgress: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await fetch('/api/study-plan');
+        const res = await fetch('/backend-api/study-plan');
         if (!res.ok) throw new Error('Failed to fetch');
         const data: StudyItem[] = await res.json();
 

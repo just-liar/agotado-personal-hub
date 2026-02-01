@@ -17,8 +17,8 @@ const NOTION_DB_ID = process.env.NOTION_DB_ID;
 // Initialize Notion Client
 const notion = new Client({ auth: NOTION_KEY });
 
-// Mock /api/study-plan for the frontend (since we are creating the backend now)
-app.get('/api/study-plan', (req, res) => {
+// Mock /backend-api/study-plan for the frontend (since we are creating the backend now)
+app.get('/backend-api/study-plan', (req, res) => {
   res.json([
     { id: 1, subject: "数据结构", topic: "KMP算法", status: 2, priority: 3 },
     { id: 2, subject: "计算机网络", topic: "TCP拥塞控制", status: 1, priority: 3 },
@@ -30,7 +30,7 @@ app.get('/api/study-plan', (req, res) => {
 });
 
 // Sync mistake to Notion
-app.post('/api/sync-mistake', async (req, res) => {
+app.post('/backend-api/sync-mistake', async (req, res) => {
   const { subject, question, answer, analysis } = req.body;
 
   if (!NOTION_KEY || !NOTION_DB_ID) {

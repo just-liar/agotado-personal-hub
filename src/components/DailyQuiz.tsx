@@ -102,7 +102,7 @@ const DailyQuiz: React.FC = () => {
     setSyncStatus(prev => ({ ...prev, [idx]: 'syncing' }));
     
     try {
-      const response = await fetch('/api/sync-mistake', {
+      const response = await fetch('/backend-api/sync-mistake', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

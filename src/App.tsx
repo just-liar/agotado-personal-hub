@@ -1,12 +1,10 @@
 
 import React, { useState, useEffect } from 'react';
 import BackgroundAnimation from './components/BackgroundAnimation';
-import NavCard from './components/NavCard';
 import StudyPlan from './components/StudyPlan';
 import StudyProgress from './components/StudyProgress';
 import DailyQuiz from './components/DailyQuiz';
 import CountdownQuote from './components/CountdownQuote';
-import { NAVIGATION_ITEMS } from './constants';
 
 const App: React.FC = () => {
   const [uptime, setUptime] = useState("0d 0h 0m");

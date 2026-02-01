@@ -34,8 +34,10 @@ app.post('/backend-api/sync-mistake', async (req, res) => {
   const { subject, question, answer, analysis } = req.body;
 
   if (!NOTION_KEY || !NOTION_DB_ID) {
-    console.error('Missing Notion credentials');
-    return res.status(500).json({ error: 'Server configuration error' });
+    console.error('SERVER ERROR: Missing Notion credentials');
+    console.error('NOTION_KEY exists:', !!NOTION_KEY);
+    console.error('NOTION_DB_ID exists:', !!NOTION_DB_ID);
+    return res.status(500).json({ error: 'Server configuration error: Missing Notion credentials' });
   }
 
   try {
@@ -46,7 +48,7 @@ app.post('/backend-api/sync-mistake', async (req, res) => {
           title: [
             {
               text: {
-                content: question,
+                content: question || "无题",
               },
             },
           ],
@@ -60,7 +62,7 @@ app.post('/backend-api/sync-mistake', async (req, res) => {
           rich_text: [
             {
               text: {
-                content: answer,
+                content: answer || "无",
               },
             },
           ],
@@ -69,7 +71,7 @@ app.post('/backend-api/sync-mistake', async (req, res) => {
           rich_text: [
             {
               text: {
-                content: analysis,
+                content: analysis || "无",
               },
             },
           ],
@@ -79,8 +81,12 @@ app.post('/backend-api/sync-mistake', async (req, res) => {
     console.log("Success! Entry added.");
     res.status(200).json({ success: true, id: response.id });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Failed to sync to Notion' });
+    console.error('NOTION API ERROR:', JSON.stringify(error, null, 2));
+    res.status(500).json({ 
+      error: 'Failed to sync to Notion', 
+      details: error.message,
+      code: error.code 
+    });
   }
 });
 
